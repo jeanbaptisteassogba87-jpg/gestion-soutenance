@@ -1,7 +1,7 @@
 <?php
     define('APP_NAME', 'Gestion des soutenances UATM GASA');
 
-    define('BASE_URL', 'http://127.0.0.1:8000');
+    define('BASE_URL', 'http://localhost:8000');    
     
     define('ROOT_PATH',    __DIR__ .'/..');
     define('APP_PATH', ROOT_PATH . '/app');
