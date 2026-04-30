@@ -22,4 +22,11 @@
             exit();
         }
     }
+
+     if(isset($_GET['action']) && $_GET['action'] === 'logout') {
+        session_start();
+        session_destroy();
+        header('Location: ../views/auth/login.php');
+        exit();
+    }
 ?>
