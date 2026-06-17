@@ -1,32 +1,50 @@
 <?php
-    session_start();
-    require_once __DIR__ . '/../../config/config.php';
-    require_once __DIR__ . '/../../config/database.php';
-    require_once __DIR__ . '/../models/Utilisateur.php';
+session_start();
+require_once __DIR__ . '/../../config/config.php';
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../models/Utilisateur.php';
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $login = $_POST['login'];
-        $pwd   = $_POST['pwd'];
+// LOGOUT
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    session_destroy();
+    header('Location: /app/views/auth/login.php');
+    exit();
+}
 
-        $user = getUserByLogin($db, $login);
+// LOGIN
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $login = trim($_POST['login']);
+    $pwd   = $_POST['pwd'];
 
-        if($user && password_verify($pwd, $user['motDePasse'])) {
-            $_SESSION['idUtilisateur'] = $user['idUtilisateur'];
-            $_SESSION['role']          = $user['role'];
-            $_SESSION['nom']           = $user['nom'];
+    $user = getUserByLogin($db, $login);
 
-                header('Location: http://localhost:8000/public/index.php');
-            exit();
-        } else {
-            header('Location: ' . BASE_URL . '/app/views/auth/login.php?error=1');
-            exit();
+    if ($user && password_verify($pwd, $user['motDePasse'])) {
+        $_SESSION['idUtilisateur'] = $user['idUtilisateur'];
+        $_SESSION['role']          = $user['role'];
+        $_SESSION['nom']           = $user['nom'];
+        $_SESSION['prenom']        = $user['prenom'];
+
+        switch ($user['role']) {
+            case 'administrateur':
+                header('Location: /app/controllers/AdminController.php');
+                break;
+            case 'etudiant':
+                header('Location: /app/controllers/EtudiantController.php');
+                break;
+            case 'encadreur':
+                header('Location: /app/controllers/EncadreurController.php');
+                break;
+            case 'membre_jury':
+                header('Location: /app/controllers/JuryController.php');
+                break;
         }
-    }
-
-     if(isset($_GET['action']) && $_GET['action'] === 'logout') {
-        session_start();
-        session_destroy();
-        header('Location: ../views/auth/login.php');
+        exit();
+    } else {
+        header('Location: /app/views/auth/login.php?error=1');
         exit();
     }
-?>
+}
+
+// Accès direct sans POST
+header('Location: /app/views/auth/login.php');
+exit();

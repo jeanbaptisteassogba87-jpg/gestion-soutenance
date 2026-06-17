@@ -1,16 +1,11 @@
 <?php
-    define('APP_NAME', 'Gestion des soutenances UATM GASA');
+define('APP_NAME', 'Gestion des Soutenances UATM GASA');
+define('BASE_URL', 'http://localhost:8000');
 
-    define('BASE_URL', 'http://localhost:8000');    
-    
-    define('ROOT_PATH',    __DIR__ .'/..');
-    define('APP_PATH', ROOT_PATH . '/app');
-    define('VIEWS_PATH', APP_PATH . '/views');
-    define('CONTROLLERS_PATH', APP_PATH .  '/controllers');
-    define('MODELS_PATH', APP_PATH . '/models');
+define('ROOT_PATH',        __DIR__ . '/..');
+define('APP_PATH',         __DIR__ . '/../app');
+define('VIEWS_PATH',       __DIR__ . '/../app/views');
+define('CONTROLLERS_PATH', __DIR__ . '/../app/controllers');
+define('MODELS_PATH',      __DIR__ . '/../app/models');
 
-    define('SESSION_DURATION', 3600);
-
-    define('APP_VERSION', '1.0.0');
-
-?>
+define('SESSION_DURATION', 3600);

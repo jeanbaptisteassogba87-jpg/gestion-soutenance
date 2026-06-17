@@ -18,15 +18,3 @@ function getAllEncadreurs($db) {
     ');
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-function getMemoiresEncadreur($db, $idEncadreur) {
-    $stmt = $db->prepare('
-        SELECT m.*, u.nom, u.prenom
-        FROM Memoire m
-        JOIN Etudiant e ON m.idEtudiant = e.idEtudiant
-        JOIN Utilisateur u ON e.idEtudiant = u.idUtilisateur
-        WHERE m.idEncadreur = ?
-    ');
-    $stmt->execute([$idEncadreur]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
