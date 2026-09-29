@@ -21,6 +21,13 @@
     <a href="/app/controllers/AdminController.php?action=affecter_jury" class="btn btn-outline">👥 Changer un jury</a>
 </div>
 
+<?php if (!empty($_SESSION['succes'])): ?>
+    <div class="alert alert-success"><?= htmlspecialchars($_SESSION['succes']); unset($_SESSION['succes']); ?></div>
+<?php endif; ?>
+<?php if (!empty($_SESSION['erreur'])): ?>
+    <div class="alert alert-danger"><?= htmlspecialchars($_SESSION['erreur']); unset($_SESSION['erreur']); ?></div>
+<?php endif; ?>
+
 <div class="table-wrap">
     <div class="table-header"><h2>Soutenances planifiées</h2></div>
     <table>
@@ -44,6 +51,20 @@
         <?php endif; ?>
         </tbody>
     </table>
+</div>
+
+<div class="table-wrap" style="border-color:#f3b4b4;margin-top:28px;">
+    <div class="table-header"><h2 style="color:#b42318;">Zone de danger — remise à zéro</h2></div>
+    <p style="padding:0 20px;">Supprime définitivement les utilisateurs, mémoires, jurys et soutenances, puis recrée uniquement le compte <code>admin</code>.</p>
+    <form action="/app/controllers/AdminController.php?action=reinitialiser" method="POST" style="padding:0 20px 20px;display:grid;gap:12px;max-width:480px;">
+        <label>Pour confirmer, écrivez <strong>REINITIALISER</strong>
+            <input type="text" name="confirmation" required autocomplete="off">
+        </label>
+        <label>Nouveau mot de passe du compte admin
+            <input type="password" name="motDePasse" required minlength="8" autocomplete="new-password">
+        </label>
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Toutes les données seront supprimées définitivement. Continuer ?')">Réinitialiser toutes les données</button>
+    </form>
 </div>
 
 <div class="table-wrap">

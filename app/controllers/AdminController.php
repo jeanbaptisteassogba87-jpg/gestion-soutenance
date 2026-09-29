@@ -128,8 +128,42 @@ switch ($action) {
         $id   = $_GET['id'] ?? null;
         $role = $_GET['role'] ?? null;
         if ($id && $role) {
-            deleteUtilisateur($db, $id, $role);
+            try {
+                deleteUtilisateur($db, $id, $role);
+            } catch (PDOException $e) {
+                $_SESSION['erreur'] = 'Cet utilisateur possède des données liées. Utilisez la réinitialisation complète si vous souhaitez tout effacer.';
+            }
         }
         header('Location: /app/controllers/AdminController.php?action=utilisateurs');
+        exit();
+
+    // ── REMISE À ZÉRO COMPLÈTE ──────────────────────────
+    case 'reinitialiser':
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: /app/controllers/AdminController.php?action=dashboard');
+            exit();
+        }
+
+        $confirmation = trim($_POST['confirmation'] ?? '');
+        $motDePasse   = $_POST['motDePasse'] ?? '';
+
+        if ($confirmation !== 'REINITIALISER' || strlen($motDePasse) < 8) {
+            $_SESSION['erreur'] = 'Saisissez « REINITIALISER » et un mot de passe d’au moins 8 caractères.';
+            header('Location: /app/controllers/AdminController.php?action=dashboard');
+            exit();
+        }
+
+        try {
+            $idAdministrateur = reinitialiserApplication($db, $motDePasse);
+            $_SESSION['idUtilisateur'] = $idAdministrateur;
+            $_SESSION['role'] = 'administrateur';
+            $_SESSION['nom'] = 'Administrateur';
+            $_SESSION['prenom'] = 'Système';
+            $_SESSION['succes'] = 'Réinitialisation terminée. Vous pouvez recréer les comptes.';
+        } catch (Throwable $e) {
+            $_SESSION['erreur'] = 'La réinitialisation a échoué. Aucune donnée n’a été supprimée.';
+        }
+
+        header('Location: /app/controllers/AdminController.php?action=dashboard');
         exit();
 }

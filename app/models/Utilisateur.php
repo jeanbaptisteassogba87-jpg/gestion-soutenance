@@ -106,3 +106,52 @@ function deleteUtilisateur($db, $id, $role) {
     // Puis supprimer l'utilisateur
     $db->prepare('DELETE FROM Utilisateur WHERE idUtilisateur = ?')->execute([$id]);
 }
+
+/**
+ * Supprime toutes les données fonctionnelles et recrée le seul compte nécessaire
+ * pour repartir sur une base propre. Les suppressions sont ordonnées afin de
+ * respecter les clés étrangères.
+ */
+function reinitialiserApplication($db, $motDePasseAdmin) {
+    $db->beginTransaction();
+
+    try {
+        foreach ([
+            'Soutenance',
+            'Memoire',
+            'RoleJury',
+            'Jury',
+            'MembreJury',
+            'Etudiant',
+            'Encadreur',
+            'Administrateur',
+            'Utilisateur',
+        ] as $table) {
+            $db->exec("DELETE FROM $table");
+        }
+
+        $stmt = $db->prepare(
+            'INSERT INTO Utilisateur (nom, prenom, login, motDePasse, role)
+             VALUES (?, ?, ?, ?, ?)'
+        );
+        $stmt->execute([
+            'Administrateur',
+            'Système',
+            'admin',
+            password_hash($motDePasseAdmin, PASSWORD_DEFAULT),
+            'administrateur',
+        ]);
+
+        $idAdministrateur = (int) $db->lastInsertId();
+        $db->prepare('INSERT INTO Administrateur (idAdministrateur) VALUES (?)')
+           ->execute([$idAdministrateur]);
+
+        $db->commit();
+        return $idAdministrateur;
+    } catch (Throwable $e) {
+        if ($db->inTransaction()) {
+            $db->rollBack();
+        }
+        throw $e;
+    }
+}
