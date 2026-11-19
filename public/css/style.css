@@ -571,3 +571,148 @@ tbody tr:hover td { background: #f8fafc; }
         grid-template-columns: 1fr;
     }
 }
+
+
+/* ========================================
+   MODERNISATION DU MENU LATERAL
+======================================== */
+
+.sidebar-brand h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.sidebar-brand h2 i {
+    color: #60a5fa;
+    font-size: 22px;
+}
+
+.sidebar nav {
+    padding: 12px 10px;
+}
+
+.sidebar-section {
+    margin: 12px 10px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #94a3b8;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 13px;
+    margin: 4px 0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar nav a i {
+    width: 19px;
+    text-align: center;
+    font-size: 15px;
+    color: #94a3b8;
+    transition: color 0.2s ease;
+}
+
+.sidebar nav a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.sidebar nav a:hover i {
+    color: #60a5fa;
+}
+
+.sidebar-bottom {
+    padding: 12px 10px 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-bottom form {
+    margin: 0 8px;
+}
+
+.sidebar-bottom .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 11px;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #cbd5e1;
+    font-size: 13px;
+}
+
+.sidebar-bottom .btn:hover {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: #ef4444;
+    color: #fca5a5;
+}
+
+.hamburger {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ========================================
+   MODERNISATION DES TABLEAUX
+======================================== */
+
+.table-wrap {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.table-header {
+    padding: 18px 22px;
+    background: #fff;
+}
+
+.table-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+table {
+    border-spacing: 0;
+}
+
+thead th {
+    padding: 14px 18px;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 11px;
+    letter-spacing: 0.7px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+tbody td {
+    padding: 14px 18px;
+    color: #334155;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+tbody tr {
+    transition: background 0.15s ease;
+}
+
+tbody tr:hover td {
+    background: #f8fafc;
+}
+
+.table-scroll {
+    border-radius: 0 0 12px 12px;
+}
