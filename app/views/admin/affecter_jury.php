@@ -6,6 +6,8 @@
 </div>
 
 <form action="/app/controllers/AdminController.php?action=affecter_jury" method="POST" class="form-card">
+    <input type="hidden" name="csrf_token"
+       value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
     <h3>🔄 Changer le jury d'une soutenance</h3>
 

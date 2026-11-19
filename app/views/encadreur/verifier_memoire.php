@@ -40,9 +40,21 @@
                 <td><span class="badge badge-<?= $m['statut'] ?>"><?= ucfirst(str_replace('_', ' ', $m['statut'])) ?></span></td>
                 <td>
                     <?php if ($m['statut'] === 'en_attente'): ?>
-                        <a href="/app/controllers/EncadreurController.php?action=valider&id=<?= $m['idMemoire'] ?>" class="btn btn-success btn-sm">✅ Valider</a>
-                        <a href="/app/controllers/EncadreurController.php?action=rejeter&id=<?= $m['idMemoire'] ?>" class="btn btn-danger btn-sm">❌ Rejeter</a>
-                    <?php else: ?>
+                       <form action="/app/controllers/EncadreurController.php?action=valider"
+      method="POST" style="display:inline;">
+    <input type="hidden" name="csrf_token"
+           value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
+    <input type="hidden" name="idMemoire" value="<?= (int)$m['idMemoire'] ?>">
+    <button type="submit" class="btn btn-success btn-sm">Valider</button>
+</form>
+
+<form action="/app/controllers/EncadreurController.php?action=rejeter"
+      method="POST" style="display:inline;">
+    <input type="hidden" name="csrf_token"
+           value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
+    <input type="hidden" name="idMemoire" value="<?= (int)$m['idMemoire'] ?>">
+    <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+</form>
                         <span style="color:#aaa;font-size:13px">Traité</span>
                     <?php endif; ?>
                 </td>

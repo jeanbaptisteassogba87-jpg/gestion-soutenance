@@ -64,3 +64,31 @@ function getSoutenanceById($db, $idSoutenance) {
     $stmt->execute([$idSoutenance]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+
+function enregistrerNoteMembreJury($db, $idSoutenance, $idMembreJury, $note, $mention) {
+    $check = $db->prepare('
+        SELECT s.idSoutenance
+        FROM Soutenance s
+        JOIN RoleJury rj ON rj.idJury = s.idJury
+        WHERE s.idSoutenance = ?
+          AND rj.idMembreJury = ?
+        LIMIT 1
+    ');
+
+    $check->execute([$idSoutenance, $idMembreJury]);
+
+    if (!$check->fetch()) {
+        return false;
+    }
+
+    $stmt = $db->prepare('
+        UPDATE Soutenance
+        SET note = ?, mention = ?
+        WHERE idSoutenance = ?
+    ');
+
+    $stmt->execute([$note, $mention, $idSoutenance]);
+
+    return true;
+}

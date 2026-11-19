@@ -81,11 +81,23 @@ function createMemoire($db, $data) {
     ]);
 }
 
-function updateStatutMemoire($db, $idMemoire, $statut) {
-    $stmt = $db->prepare('UPDATE Memoire SET statut = ? WHERE idMemoire = ?');
-    $stmt->execute([$statut, $idMemoire]);
-}
+function updateStatutMemoire($db, $idMemoire, $idEncadreur, $statut) {
+    if (!in_array($statut, ['valide', 'rejete'], true)) {
+        return false;
+    }
 
+    $stmt = $db->prepare('
+        UPDATE Memoire
+        SET statut = ?
+        WHERE idMemoire = ?
+          AND idEncadreur = ?
+          AND statut = "en_attente"
+    ');
+
+    $stmt->execute([$statut, $idMemoire, $idEncadreur]);
+
+    return $stmt->rowCount() === 1;
+}
 function getMemoiresEncadreur($db, $idEncadreur) {
     $stmt = $db->prepare('
         SELECT m.*, 

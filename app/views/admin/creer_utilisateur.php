@@ -1,3 +1,4 @@
+
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <div class="topbar">
@@ -6,10 +7,15 @@
 </div>
 
 <?php if (isset($erreur)): ?>
-    <div class="alert alert-error">⚠️ <?= $erreur ?></div>
+    <div class="alert alert-error">
+        ⚠️ <?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?>
+    </div>
 <?php endif; ?>
 
 <form action="/app/controllers/AdminController.php?action=creer_utilisateur" method="POST" class="form-card">
+
+    <input type="hidden" name="csrf_token"
+           value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
     <h3>👤 Informations personnelles</h3>
 
@@ -31,7 +37,8 @@
 
     <div class="form-group">
         <label>Mot de passe</label>
-        <input type="password" name="motDePasse" placeholder="Minimum 6 caractères" required minlength="6">
+        <input type="password" name="motDePasse"
+               placeholder="Minimum 8 caractères" required minlength="8">
     </div>
 
     <h3>🎭 Rôle et informations spécifiques</h3>
@@ -46,7 +53,6 @@
         </select>
     </div>
 
-    <!-- Champ dynamique selon le rôle -->
     <div class="form-group" id="extraField" style="display:none">
         <label id="extraLabel">Filière</label>
         <input type="text" name="extra" id="extraInput" placeholder="">
@@ -62,7 +68,7 @@ function toggleExtra() {
     const field = document.getElementById('extraField');
     const label = document.getElementById('extraLabel');
     const input = document.getElementById('extraInput');
-    const help  = document.getElementById('extraHelp');
+    const help = document.getElementById('extraHelp');
 
     if (role === 'etudiant') {
         field.style.display = 'flex';

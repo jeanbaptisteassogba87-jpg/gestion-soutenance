@@ -72,7 +72,7 @@ switch ($action) {
         
     case 'calendrier':
         // Pour affichage calendrier (optionnel)
-        $soutenances = getAllSoutenances($db);
+        $soutenances = getSoutenancesMembreJury($db, $_SESSION['idUtilisateur']);
         $events = [];
         foreach ($soutenances as $s) {
             $events[] = [

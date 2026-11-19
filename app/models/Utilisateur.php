@@ -90,21 +90,71 @@ function updateEncadreur($db, $id, $specialite) {
 
 // ── Supprimer un utilisateur ─────────────────────────────
 
-function deleteUtilisateur($db, $id, $role) {
-    // Supprimer d'abord la table fille (contrainte FK)
-    switch ($role) {
-        case 'etudiant':
-            $db->prepare('DELETE FROM Etudiant WHERE idEtudiant = ?')->execute([$id]);
-            break;
-        case 'encadreur':
-            $db->prepare('DELETE FROM Encadreur WHERE idEncadreur = ?')->execute([$id]);
-            break;
-        case 'membre_jury':
-            $db->prepare('DELETE FROM MembreJury WHERE idMembreJury = ?')->execute([$id]);
-            break;
+function deleteUtilisateur($db, $id, $role)
+{
+    $rolesAutorises = [
+        'etudiant' => 'Etudiant',
+        'encadreur' => 'Encadreur',
+        'membre_jury' => 'MembreJury'
+    ];
+
+    if (!isset($rolesAutorises[$role])) {
+        return false;
     }
-    // Puis supprimer l'utilisateur
-    $db->prepare('DELETE FROM Utilisateur WHERE idUtilisateur = ?')->execute([$id]);
+
+    $db->beginTransaction();
+
+    try {
+        // Vérifier que l'utilisateur existe et possède réellement ce rôle.
+        $stmt = $db->prepare(
+            'SELECT role FROM Utilisateur WHERE idUtilisateur = ?'
+        );
+        $stmt->execute([$id]);
+
+        $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$utilisateur || $utilisateur['role'] !== $role) {
+            $db->rollBack();
+            return false;
+        }
+
+        // Supprimer d'abord le profil correspondant.
+        $table = $rolesAutorises[$role];
+        $colonne = match ($role) {
+            'etudiant' => 'idEtudiant',
+            'encadreur' => 'idEncadreur',
+            'membre_jury' => 'idMembreJury'
+        };
+
+        $stmt = $db->prepare(
+            "DELETE FROM $table WHERE $colonne = ?"
+        );
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount() !== 1) {
+            throw new RuntimeException('Profil utilisateur introuvable.');
+        }
+
+        // Supprimer ensuite le compte principal.
+        $stmt = $db->prepare(
+            'DELETE FROM Utilisateur WHERE idUtilisateur = ?'
+        );
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount() !== 1) {
+            throw new RuntimeException('Compte utilisateur introuvable.');
+        }
+
+        $db->commit();
+        return true;
+
+    } catch (Throwable $e) {
+        if ($db->inTransaction()) {
+            $db->rollBack();
+        }
+
+        throw $e;
+    }
 }
 
 /**

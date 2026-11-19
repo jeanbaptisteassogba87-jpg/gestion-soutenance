@@ -5,6 +5,7 @@ if (!isset($_SESSION['idUtilisateur'])) {
     header('Location: /app/views/auth/login.php');
     exit();
 }
+require_once __DIR__ . '/../../helpers/security.php';
 $role = $_SESSION['role'];
 ?>
 <!DOCTYPE html>
@@ -59,7 +60,11 @@ $role = $_SESSION['role'];
 
     <div class="sidebar-bottom">
         <div class="sidebar-section" style="color:#4a5f75;padding:14px 12px 6px;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;">Compte</div>
-        <a href="/app/controllers/AuthController.php?action=logout">🚪 Se déconnecter</a>
+        <form action="/app/controllers/AuthController.php?action=logout" method="POST">
+            <input type="hidden" name="csrf_token"
+                value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
+            <button type="submit" class="btn btn-outline">🚪 Se déconnecter</button>
+        </form>
     </div>
 </aside>
 

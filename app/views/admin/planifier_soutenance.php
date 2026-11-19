@@ -16,8 +16,12 @@
 <?php else: ?>
 
 <form action="/app/controllers/AdminController.php?action=planifier"
+
       method="POST"
       class="form-card">
+
+      <input type="hidden" name="csrf_token"
+       value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
     <h3>📄 Informations de la soutenance</h3>
 
