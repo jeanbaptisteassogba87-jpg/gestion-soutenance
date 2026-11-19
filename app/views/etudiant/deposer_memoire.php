@@ -5,8 +5,10 @@
     <a href="/app/controllers/EtudiantController.php?action=dashboard" class="btn btn-outline">← Retour</a>
 </div>
 
-<?php if (isset($erreur)): ?>
-    <div class="alert alert-error">⚠️ <?= $erreur ?></div>
+<?php if (!empty($erreur)): ?>
+    <div class="alert alert-error">
+        <?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?>
+    </div>
 <?php endif; ?>
 
 <form action="/app/controllers/EtudiantController.php?action=deposer"
