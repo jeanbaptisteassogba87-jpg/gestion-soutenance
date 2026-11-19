@@ -44,7 +44,7 @@
                     data-titre="<?= htmlspecialchars($s['titre'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
                     data-etu1="<?= htmlspecialchars(($s['nom_etudiant1'] ?? '') . ' ' . ($s['prenom_etudiant1'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
                     data-etu2="<?= htmlspecialchars(isset($s['nom_etudiant2']) ? ($s['nom_etudiant2'] . ' ' . ($s['prenom_etudiant2'] ?? '')) : '', ENT_QUOTES, 'UTF-8') ?>"
-                    data-fichier="<?= htmlspecialchars($s['fichier'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                    data-idmemoire="<?= (int) $s['idMemoire'] ?>"
                     data-note="<?= htmlspecialchars((string) ($s['note'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
                 >
                     Soutenance #<?= (int) $s['idSoutenance'] ?>
@@ -150,20 +150,19 @@ function afficherDetails() {
     document.getElementById('d-etu1').textContent = option.dataset.etu1;
     document.getElementById('d-etu2').textContent = option.dataset.etu2 || '—';
 
-    // Afficher le fichier PDF
-    const fichier = option.dataset.fichier;
+      // Afficher le fichier PDF de manière sécurisée
+    const idMemoire = option.dataset.idmemoire;
     const pdfLink = document.getElementById('d-pdf');
     const noPdf = document.getElementById('d-nopdf');
 
-    if (fichier) {
-        pdfLink.href = '/public/uploads/memoires/' + encodeURIComponent(fichier);
+    if (idMemoire) {
+        pdfLink.href = '/app/controllers/TelechargerMemoireController.php?id=' + encodeURIComponent(idMemoire);
         pdfLink.style.display = 'inline-block';
         noPdf.style.display = 'none';
     } else {
         pdfLink.style.display = 'none';
         noPdf.style.display = 'inline';
     }
-
     // Charger la note existante ou vider le champ
     noteInput.value = option.dataset.note || '';
 

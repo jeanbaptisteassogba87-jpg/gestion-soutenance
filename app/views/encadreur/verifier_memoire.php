@@ -32,7 +32,7 @@
                 <td><?= $m['dateDepot'] ?></td>
                 <td>
                     <?php if ($m['fichier']): ?>
-                        <a href="/public/uploads/memoires/<?= $m['fichier'] ?>" target="_blank" class="btn btn-sm btn-outline">📄 Voir PDF</a>
+                        <a href="/app/controllers/TelechargerMemoireController.php?id=<?= (int) $m['idMemoire'] ?>" target="_blank" class="btn btn-sm btn-outline">📄 Voir PDF</a>  
                     <?php else: ?>
                         <span style="color:#aaa">—</span>
                     <?php endif; ?>

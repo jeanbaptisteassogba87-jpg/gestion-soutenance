@@ -22,3 +22,5 @@ Thumbs.db
 # Cache et fichiers temporaires PHP
 *.cache
 .phpunit.cache/
+
+/storage/memoires/*.pdf

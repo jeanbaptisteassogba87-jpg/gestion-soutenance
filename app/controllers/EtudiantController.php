@@ -100,7 +100,7 @@ switch ($action) {
             if ($erreur === null) {
 
                 $nomFichier = bin2hex(random_bytes(16)) . '.pdf';
-                $destination = __DIR__ . '/../../public/uploads/memoires/' . $nomFichier;
+                $destination = __DIR__ . '/../../storage/memoires/' . $nomFichier;
 
                 if (!move_uploaded_file($upload['tmp_name'], $destination)) {
                     $erreur = "Impossible d'enregistrer le fichier.";
