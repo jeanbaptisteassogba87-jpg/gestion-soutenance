@@ -10,6 +10,11 @@ if (!isset($_SESSION['idUtilisateur'])) {
 
 require_once __DIR__ . '/../../helpers/security.php';
 $role = $_SESSION['role'];
+$currentController = basename($_SERVER['PHP_SELF'] ?? '');
+$currentAction = $_GET['action'] ?? 'dashboard';
+$isActive = static function (string $controller, array $actions) use ($currentController, $currentAction): string {
+    return $currentController === $controller && in_array($currentAction, $actions, true) ? 'active' : '';
+};
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,12 +31,12 @@ $role = $_SESSION['role'];
 </head>
 <body>
 
-<button class="hamburger" id="hamburger"
-        onclick="toggleSidebar()" aria-label="Ouvrir le menu">
+<button class="hamburger" id="hamburger" type="button"
+        aria-label="Ouvrir le menu" aria-controls="sidebar" aria-expanded="false">
     <i class="fa-solid fa-bars"></i>
 </button>
 
-<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+<div class="sidebar-overlay" id="overlay"></div>
 
 <div class="wrapper">
 
@@ -47,61 +52,61 @@ $role = $_SESSION['role'];
 
         <?php if ($role === 'administrateur'): ?>
 
-            <a href="/app/controllers/AdminController.php?action=dashboard">
+            <a class="<?= $isActive('AdminController.php', ['dashboard']) ?>" href="/app/controllers/AdminController.php?action=dashboard">
                 <i class="fa-solid fa-chart-line"></i> Tableau de bord
             </a>
-            <a href="/app/controllers/AdminController.php?action=planifier">
+            <a class="<?= $isActive('AdminController.php', ['planifier']) ?>" href="/app/controllers/AdminController.php?action=planifier">
                 <i class="fa-solid fa-calendar-plus"></i> Planifier une soutenance
             </a>
-            <a href="/app/controllers/AdminController.php?action=affecter_jury">
+            <a class="<?= $isActive('AdminController.php', ['affecter_jury']) ?>" href="/app/controllers/AdminController.php?action=affecter_jury">
                 <i class="fa-solid fa-users"></i> Changer un jury
             </a>
 
             <div class="sidebar-section">Gestion</div>
 
-            <a href="/app/controllers/AdminController.php?action=utilisateurs&type=etudiant">
+            <a class="<?= (in_array($currentAction, ['utilisateurs', 'creer_utilisateur', 'modifier_utilisateur', 'supprimer_utilisateur'], true) && ($_GET['type'] ?? 'etudiant') === 'etudiant') ? 'active' : '' ?>" href="/app/controllers/AdminController.php?action=utilisateurs&type=etudiant">
                 <i class="fa-solid fa-user-graduate"></i> Etudiants
             </a>
-            <a href="/app/controllers/AdminController.php?action=utilisateurs&type=encadreur">
+            <a class="<?= ($currentAction === 'utilisateurs' && ($_GET['type'] ?? '') === 'encadreur') ? 'active' : '' ?>" href="/app/controllers/AdminController.php?action=utilisateurs&type=encadreur">
                 <i class="fa-solid fa-chalkboard-user"></i> Encadreurs
             </a>
-            <a href="/app/controllers/AdminController.php?action=utilisateurs&type=membre_jury">
+            <a class="<?= ($currentAction === 'utilisateurs' && ($_GET['type'] ?? '') === 'membre_jury') ? 'active' : '' ?>" href="/app/controllers/AdminController.php?action=utilisateurs&type=membre_jury">
                 <i class="fa-solid fa-scale-balanced"></i> Membres jury
             </a>
 
         <?php elseif ($role === 'etudiant'): ?>
 
-            <a href="/app/controllers/EtudiantController.php?action=dashboard">
+            <a class="<?= $isActive('EtudiantController.php', ['dashboard']) ?>" href="/app/controllers/EtudiantController.php?action=dashboard">
                 <i class="fa-solid fa-chart-line"></i> Tableau de bord
             </a>
-            <a href="/app/controllers/EtudiantController.php?action=deposer">
+            <a class="<?= $isActive('EtudiantController.php', ['deposer']) ?>" href="/app/controllers/EtudiantController.php?action=deposer">
                 <i class="fa-solid fa-file-pdf"></i> Déposer mon mémoire
             </a>
-            <a href="/app/controllers/EtudiantController.php?action=planning">
+            <a class="<?= $isActive('EtudiantController.php', ['planning']) ?>" href="/app/controllers/EtudiantController.php?action=planning">
                 <i class="fa-solid fa-calendar-days"></i> Planning des soutenances
             </a>
 
         <?php elseif ($role === 'encadreur'): ?>
 
-            <a href="/app/controllers/EncadreurController.php?action=dashboard">
+            <a class="<?= $isActive('EncadreurController.php', ['dashboard']) ?>" href="/app/controllers/EncadreurController.php?action=dashboard">
                 <i class="fa-solid fa-chart-line"></i> Tableau de bord
             </a>
-            <a href="/app/controllers/EncadreurController.php?action=memoires">
+            <a class="<?= $isActive('EncadreurController.php', ['memoires', 'valider', 'rejeter']) ?>" href="/app/controllers/EncadreurController.php?action=memoires">
                 <i class="fa-solid fa-file-circle-check"></i> Mémoires à vérifier
             </a>
 
         <?php elseif ($role === 'membre_jury'): ?>
 
-            <a href="/app/controllers/JuryController.php?action=dashboard">
+            <a class="<?= $isActive('JuryController.php', ['dashboard']) ?>" href="/app/controllers/JuryController.php?action=dashboard">
                 <i class="fa-solid fa-chart-line"></i> Tableau de bord
             </a>
-            <a href="/app/controllers/JuryController.php?action=planning">
+            <a class="<?= $isActive('JuryController.php', ['planning']) ?>" href="/app/controllers/JuryController.php?action=planning">
                 <i class="fa-solid fa-calendar-days"></i> Planning des soutenances
             </a>
-            <a href="/app/controllers/JuryController.php?action=evaluer">
+            <a class="<?= $isActive('JuryController.php', ['evaluer']) ?>" href="/app/controllers/JuryController.php?action=evaluer">
                 <i class="fa-solid fa-pen-to-square"></i> Evaluer un étudiant
             </a>
-            <a href="/app/controllers/JuryController.php?action=deliberer">
+            <a class="<?= $isActive('JuryController.php', ['deliberer']) ?>" href="/app/controllers/JuryController.php?action=deliberer">
                 <i class="fa-solid fa-scale-balanced"></i> Délibération
             </a>
 
@@ -110,8 +115,7 @@ $role = $_SESSION['role'];
 
     <div class="sidebar-bottom">
 
-        <div class="sidebar-section"
-             style="color:#4a5f75;padding:14px 12px 6px;font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;">
+        <div class="sidebar-section">
             Compte
         </div>
 
@@ -128,15 +132,3 @@ $role = $_SESSION['role'];
 </aside>
 
 <main class="main">
-
-<script>
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
-    document.getElementById('overlay').classList.toggle('show');
-}
-
-function closeSidebar() {
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('overlay').classList.remove('show');
-}
-</script>
