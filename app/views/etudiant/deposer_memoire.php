@@ -23,8 +23,8 @@
 
     <div class="form-group">
         <label>Binôme (votre co-étudiant)</label>
-        <select name="idEtudiant2" required>
-            <option value="">-- Choisir votre binôme --</option>
+        <select name="idEtudiant2">
+            <option value="">-- Aucun binôme (mémoire individuel) --</option>
             <?php foreach ($etudiants as $e): ?>
             <option value="<?= $e['idEtudiant'] ?>">
                 <?= htmlspecialchars($e['nom'] . ' ' . $e['prenom']) ?>

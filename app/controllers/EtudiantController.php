@@ -25,25 +25,52 @@ switch ($action) {
     case 'deposer':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $erreur = null;
             $fichier = null;
-            if (isset($_FILES['fichier']) && $_FILES['fichier']['error'] === 0) {
-                $ext = pathinfo($_FILES['fichier']['name'], PATHINFO_EXTENSION);
-                if (strtolower($ext) !== 'pdf') {
-                    $erreur = "Seuls les fichiers PDF sont acceptés.";
-                    $encadreurs = getAllEncadreurs($db);
-                    $etudiants  = getAllEtudiants($db);
-                    require_once VIEWS_PATH . '/etudiant/deposer_memoire.php';
-                    break;
+
+            if (
+                !isset($_FILES['fichier']) ||
+                $_FILES['fichier']['error'] !== UPLOAD_ERR_OK
+            ) {
+                $erreur = "Veuillez sélectionner un fichier PDF valide.";
+            } else {
+                $upload = $_FILES['fichier'];
+
+                if ($upload['size'] > 10 * 1024 * 1024) {
+                    $erreur = "Le fichier ne doit pas dépasser 10 Mo.";
+                } else {
+                    $finfo = new finfo(FILEINFO_MIME_TYPE);
+                    $typeMime = $finfo->file($upload['tmp_name']);
+
+                    if ($typeMime !== 'application/pdf') {
+                        $erreur = "Le fichier doit être un véritable PDF.";
+                    } else {
+                        $nomFichier = bin2hex(random_bytes(16)) . '.pdf';
+                        $destination = __DIR__ . '/../../public/uploads/memoires/' . $nomFichier;
+
+                        if (move_uploaded_file($upload['tmp_name'], $destination)) {
+                            $fichier = $nomFichier;
+                        } else {
+                            $erreur = "Impossible d'enregistrer le fichier.";
+                        }
+                    }
                 }
-                $nomFichier = uniqid('memoire_') . '.pdf';
-                $destination = __DIR__ . '/../../public/uploads/memoires/' . $nomFichier;
-                move_uploaded_file($_FILES['fichier']['tmp_name'], $destination);
-                $fichier = $nomFichier;
+            }
+
+            if ($erreur !== null) {
+                $encadreurs = getAllEncadreurs($db);
+                $etudiants = array_filter(getAllEtudiants($db), function ($e) {
+                    return $e['idEtudiant'] != $_SESSION['idUtilisateur'];
+                });
+                require_once VIEWS_PATH . '/etudiant/deposer_memoire.php';
+                break;
             }
 
             createMemoire($db, [
                 'idEtudiant'  => $_SESSION['idUtilisateur'],
-                'idEtudiant2' => $_POST['idEtudiant2'],
+                'idEtudiant2' => !empty($_POST['idEtudiant2'])
+                ? (int) $_POST['idEtudiant2']
+                : null,
                 'idEncadreur' => $_POST['idEncadreur'],
                 'titre'       => $_POST['titre'],
                 'dateDepot'   => date('Y-m-d'),

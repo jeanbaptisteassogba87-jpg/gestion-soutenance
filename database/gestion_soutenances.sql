@@ -51,12 +51,24 @@ CREATE TABLE RoleJury (
 CREATE TABLE Memoire (
   idMemoire   INT          PRIMARY KEY AUTO_INCREMENT,
   idEtudiant  INT          NOT NULL,
+  idEtudiant2 INT          NULL,
   idEncadreur INT          NOT NULL,
   titre       VARCHAR(255) NOT NULL,
   dateDepot   DATE         NOT NULL,
   statut      ENUM('en_attente','valide','rejete') NOT NULL DEFAULT 'en_attente',
-  FOREIGN KEY (idEtudiant)  REFERENCES Etudiant(idEtudiant),
-  FOREIGN KEY (idEncadreur) REFERENCES Encadreur(idEncadreur)
+  fichier     VARCHAR(255) NOT NULL,
+
+  CONSTRAINT fk_memoire_etudiant1
+    FOREIGN KEY (idEtudiant) REFERENCES Etudiant(idEtudiant),
+
+  CONSTRAINT fk_memoire_etudiant2
+    FOREIGN KEY (idEtudiant2) REFERENCES Etudiant(idEtudiant),
+
+  CONSTRAINT fk_memoire_encadreur
+    FOREIGN KEY (idEncadreur) REFERENCES Encadreur(idEncadreur),
+
+  CONSTRAINT chk_memoire_etudiants_differents
+    CHECK (idEtudiant2 IS NULL OR idEtudiant2 <> idEtudiant)
 );
 
 
