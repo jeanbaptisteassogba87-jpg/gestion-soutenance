@@ -6,12 +6,12 @@
 </div>
 
 <?php if (isset($erreur)): ?>
-    <div class="alert alert-error">⚠️ <?= $erreur ?></div>
+    <div class="alert alert-error"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> <?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?></div>
 <?php endif; ?>
 
 <?php if (empty($memoires)): ?>
     <div class="alert alert-error">
-        ⚠️ Aucun mémoire validé disponible. L'encadreur doit d'abord valider un mémoire.
+        <i class="fa-solid fa-circle-info" aria-hidden="true"></i> Aucun mémoire validé disponible. L'encadreur doit d'abord valider un mémoire.
     </div>
 <?php else: ?>
 
@@ -23,7 +23,7 @@
       <input type="hidden" name="csrf_token"
        value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
-    <h3>📄 Informations de la soutenance</h3>
+    <h3><i class="fa-regular fa-calendar-check" aria-hidden="true"></i> Informations de la soutenance</h3>
 
     <div class="form-group">
         <label>Mémoire concerné (validés uniquement)</label>
@@ -54,7 +54,7 @@
         <input type="text" name="salle" placeholder="Ex : Salle A203" required>
     </div>
 
-    <h3>👥 Composition du jury</h3>
+    <h3><i class="fa-solid fa-users" aria-hidden="true"></i> Composition du jury</h3>
     <p style="font-size:13px;color:#888;margin-top:-8px">Chaque membre ne peut avoir qu'un seul rôle.</p>
 
     <div class="form-group">
@@ -93,7 +93,7 @@
         </select>
     </div>
 
-    <button type="submit" class="btn">✅ Planifier la soutenance</button>
+    <button type="submit" class="btn"><i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> Planifier la soutenance</button>
 </form>
 
 <script>

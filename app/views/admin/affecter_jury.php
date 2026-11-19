@@ -9,7 +9,7 @@
     <input type="hidden" name="csrf_token"
        value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
-    <h3>🔄 Changer le jury d'une soutenance</h3>
+    <h3><i class="fa-solid fa-users-gear" aria-hidden="true"></i> Changer le jury d'une soutenance</h3>
 
     <div class="form-group">
         <label>Soutenance</label>
@@ -31,7 +31,7 @@
         </select>
     </div>
 
-    <button type="submit" class="btn">✅ Affecter</button>
+    <button type="submit" class="btn"><i class="fa-solid fa-user-check" aria-hidden="true"></i> Affecter</button>
 </form>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

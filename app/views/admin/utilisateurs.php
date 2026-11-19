@@ -6,22 +6,20 @@
     <a href="/app/controllers/AdminController.php?action=creer_utilisateur" class="btn">+ Ajouter un utilisateur</a>
 </div>
 
-<div style="display:flex;gap:6px;margin-bottom:20px;border-bottom:2px solid var(--border);padding-bottom:0;">
+<div class="user-tabs">
     <?php
     $type = $_GET['type'] ?? 'etudiant';
     $tabs = [
-        'etudiant' => '🎓 Etudiants',
-        'encadreur' => '👨‍🏫 Encadreurs',
-        'membre_jury' => '⚖️ Membres jury'
+        'etudiant' => '<i class="fa-solid fa-user-graduate" aria-hidden="true"></i> Étudiants',
+        'encadreur' => '<i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i> Encadreurs',
+        'membre_jury' => '<i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Membres du jury'
     ];
 
     foreach ($tabs as $key => $label):
-        $active = $type === $key
-            ? 'style="background:var(--primary);color:#fff;border-color:var(--primary)"'
-            : '';
+        $active = $type === $key ? 'active' : '';
     ?>
         <a href="/app/controllers/AdminController.php?action=utilisateurs&type=<?= htmlspecialchars($key, ENT_QUOTES, 'UTF-8') ?>"
-           class="btn btn-sm btn-outline" <?= $active ?>>
+           class="btn btn-sm btn-outline <?= $active ?>">
             <?= $label ?>
         </a>
     <?php endforeach; ?>
@@ -31,7 +29,7 @@
 
 <div class="table-wrap">
     <div class="table-header">
-        <h2>🎓 Etudiants (<?= count($etudiants) ?>)</h2>
+        <h2><i class="fa-solid fa-user-graduate" aria-hidden="true"></i> Étudiants (<?= count($etudiants) ?>)</h2>
     </div>
 
     <div class="table-scroll">
@@ -54,7 +52,7 @@
                     <td><?= htmlspecialchars($u['filiere'], ENT_QUOTES, 'UTF-8') ?></td>
                     <td>
                         <a href="/app/controllers/AdminController.php?action=modifier_utilisateur&id=<?= (int)$u['idUtilisateur'] ?>"
-                           class="btn btn-sm btn-outline">✏️ Modifier</a>
+                           class="btn btn-sm btn-outline"><i class="fa-solid fa-pen" aria-hidden="true"></i> Modifier</a>
 
                         <form action="/app/controllers/AdminController.php?action=supprimer_utilisateur"
                               method="POST"
@@ -66,7 +64,7 @@
                             <input type="hidden" name="id" value="<?= (int)$u['idUtilisateur'] ?>">
                             <input type="hidden" name="role" value="etudiant">
 
-                            <button type="submit" class="btn btn-sm btn-danger">🗑️</button>
+                            <button type="submit" class="btn btn-sm btn-danger" aria-label="Supprimer l’étudiant"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -80,7 +78,7 @@
 
 <div class="table-wrap">
     <div class="table-header">
-        <h2>👨‍🏫 Encadreurs (<?= count($encadreurs) ?>)</h2>
+        <h2> Encadreurs (<?= count($encadreurs) ?>)</h2>
     </div>
 
     <div class="table-scroll">
@@ -103,7 +101,7 @@
                     <td><?= htmlspecialchars($u['specialite'], ENT_QUOTES, 'UTF-8') ?></td>
                     <td>
                         <a href="/app/controllers/AdminController.php?action=modifier_utilisateur&id=<?= (int)$u['idUtilisateur'] ?>"
-                           class="btn btn-sm btn-outline">✏️ Modifier</a>
+                           class="btn btn-sm btn-outline"><i class="fa-solid fa-pen" aria-hidden="true"></i> Modifier</a>
 
                         <form action="/app/controllers/AdminController.php?action=supprimer_utilisateur"
                               method="POST"
@@ -115,7 +113,7 @@
                             <input type="hidden" name="id" value="<?= (int)$u['idUtilisateur'] ?>">
                             <input type="hidden" name="role" value="encadreur">
 
-                            <button type="submit" class="btn btn-sm btn-danger">🗑️</button>
+                            <button type="submit" class="btn btn-sm btn-danger" aria-label="Supprimer l’encadreur"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -129,7 +127,7 @@
 
 <div class="table-wrap">
     <div class="table-header">
-        <h2>⚖️ Membres jury (<?= count($jurys_m) ?>)</h2>
+        <h2><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Membres du jury (<?= count($jurys_m) ?>)</h2>
     </div>
 
     <div class="table-scroll">
@@ -150,7 +148,7 @@
                     <td><code><?= htmlspecialchars($u['login'], ENT_QUOTES, 'UTF-8') ?></code></td>
                     <td>
                         <a href="/app/controllers/AdminController.php?action=modifier_utilisateur&id=<?= (int)$u['idUtilisateur'] ?>"
-                           class="btn btn-sm btn-outline">✏️ Modifier</a>
+                           class="btn btn-sm btn-outline"><i class="fa-solid fa-pen" aria-hidden="true"></i> Modifier</a>
 
                         <form action="/app/controllers/AdminController.php?action=supprimer_utilisateur"
                               method="POST"
@@ -162,7 +160,7 @@
                             <input type="hidden" name="id" value="<?= (int)$u['idUtilisateur'] ?>">
                             <input type="hidden" name="role" value="membre_jury">
 
-                            <button type="submit" class="btn btn-sm btn-danger">🗑️</button>
+                            <button type="submit" class="btn btn-sm btn-danger" aria-label="Supprimer le membre du jury"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>
                         </form>
                     </td>
                 </tr>

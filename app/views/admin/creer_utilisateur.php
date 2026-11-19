@@ -8,7 +8,7 @@
 
 <?php if (isset($erreur)): ?>
     <div class="alert alert-error">
-        ⚠️ <?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?>
+         <?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?>
     </div>
 <?php endif; ?>
 
@@ -17,7 +17,7 @@
     <input type="hidden" name="csrf_token"
            value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
-    <h3>👤 Informations personnelles</h3>
+    <h3><i class="fa-solid fa-user" aria-hidden="true"></i> Informations personnelles</h3>
 
     <div class="form-group">
         <label>Nom</label>
@@ -41,15 +41,15 @@
                placeholder="Minimum 8 caractères" required minlength="8">
     </div>
 
-    <h3>🎭 Rôle et informations spécifiques</h3>
+    <h3><i class="fa-solid fa-id-badge" aria-hidden="true"></i> Rôle et informations spécifiques</h3>
 
     <div class="form-group">
         <label>Rôle</label>
         <select name="role" id="roleSelect" onchange="toggleExtra()" required>
             <option value="">-- Choisir un rôle --</option>
-            <option value="etudiant">🎓 Etudiant</option>
-            <option value="encadreur">👨‍🏫 Encadreur</option>
-            <option value="membre_jury">⚖️ Membre jury</option>
+            <option value="etudiant">Étudiant</option>
+            <option value="encadreur"> Encadreur</option>
+            <option value="membre_jury">Membre du jury</option>
         </select>
     </div>
 
@@ -59,7 +59,7 @@
         <small id="extraHelp"></small>
     </div>
 
-    <button type="submit" class="btn">✅ Créer l'utilisateur</button>
+    <button type="submit" class="btn"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Créer l'utilisateur</button>
 </form>
 
 <script>

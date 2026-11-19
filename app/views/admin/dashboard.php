@@ -2,7 +2,7 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <div class="topbar">
-    <h1>Dashboard — Administrateur</h1>
+    <h1>Tableau de bord — Administrateur</h1>
     <span>Bonjour, <strong><?= htmlspecialchars($_SESSION['nom'] . ' ' . $_SESSION['prenom'], ENT_QUOTES, 'UTF-8') ?></strong></span>
 </div>
 
@@ -18,8 +18,8 @@
 </div>
 
 <div class="actions-bar">
-    <a href="/app/controllers/AdminController.php?action=planifier" class="btn">+ Planifier une soutenance</a>
-    <a href="/app/controllers/AdminController.php?action=affecter_jury" class="btn btn-outline">👥 Changer un jury</a>
+    <a href="/app/controllers/AdminController.php?action=planifier" class="btn"><i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> Planifier une soutenance</a>
+    <a href="/app/controllers/AdminController.php?action=affecter_jury" class="btn btn-outline"><i class="fa-solid fa-users-gear" aria-hidden="true"></i> Changer un jury</a>
 </div>
 
 <?php if (!empty($_SESSION['succes'])): ?>
@@ -66,19 +66,18 @@
     </table>
 </div>
 
-<div class="table-wrap" style="border-color:#f3b4b4;margin-top:28px;">
+<div class="danger-zone">
     <div class="table-header">
         <h2 style="color:#b42318;">Zone de danger — remise à zéro</h2>
     </div>
 
-    <p style="padding:0 20px;">
+    <p>
         Supprime définitivement les utilisateurs, mémoires, jurys et soutenances,
         puis recrée uniquement le compte <code>admin</code>.
     </p>
 
     <form action="/app/controllers/AdminController.php?action=reinitialiser"
-          method="POST"
-          style="padding:0 20px 20px;display:grid;gap:12px;max-width:480px;">
+          method="POST">
 
         <input type="hidden" name="csrf_token"
                value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">

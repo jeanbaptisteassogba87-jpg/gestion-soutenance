@@ -8,7 +8,7 @@
 
 <?php if (isset($erreur)): ?>
     <div class="alert alert-error">
-        ⚠️ <?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?>
+         <?= htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8') ?>
     </div>
 <?php endif; ?>
 
@@ -18,7 +18,7 @@
     <input type="hidden" name="csrf_token"
            value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
-    <h3>👤 Informations personnelles</h3>
+    <h3><i class="fa-solid fa-user" aria-hidden="true"></i> Informations personnelles</h3>
 
     <div class="form-group">
         <label>Nom</label>
@@ -38,7 +38,7 @@
                value="<?= htmlspecialchars($user['login'], ENT_QUOTES, 'UTF-8') ?>" required>
     </div>
 
-    <h3>🔒 Changer le mot de passe</h3>
+    <h3><i class="fa-solid fa-lock" aria-hidden="true"></i> Changer le mot de passe</h3>
 
     <div class="form-group">
         <label>Nouveau mot de passe</label>
@@ -48,7 +48,7 @@
     </div>
 
     <?php if ($user['role'] === 'etudiant'): ?>
-        <h3>🎓 Informations étudiant</h3>
+        <h3><i class="fa-solid fa-user-graduate" aria-hidden="true"></i> Informations étudiant</h3>
 
         <?php
             $etudiant = $db->prepare('SELECT filiere FROM Etudiant WHERE idEtudiant = ?');
@@ -63,7 +63,7 @@
         </div>
 
     <?php elseif ($user['role'] === 'encadreur'): ?>
-        <h3>👨‍🏫 Informations encadreur</h3>
+        <h3><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i> Informations encadreur</h3>
 
         <?php
             $enc = $db->prepare('SELECT specialite FROM Encadreur WHERE idEncadreur = ?');
@@ -79,7 +79,7 @@
     <?php endif; ?>
 
     <div style="display:flex;gap:10px;align-items:center">
-        <button type="submit" class="btn">💾 Enregistrer</button>
+        <button type="submit" class="btn"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Enregistrer</button>
         <span style="font-size:13px;color:var(--text-soft)">
             Rôle : <strong><?= htmlspecialchars(ucfirst(str_replace('_', ' ', $user['role'])), ENT_QUOTES, 'UTF-8') ?></strong>
         </span>
