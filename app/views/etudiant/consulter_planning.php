@@ -5,7 +5,7 @@
 </div>
 
 <div class="table-wrap">
-    <div class="table-header"><h2>Toutes les soutenances</h2></div>
+    <div class="table-header"><h2><i class="fa-regular fa-calendar-days" aria-hidden="true"></i> Toutes les soutenances</h2></div>
     <table>
         <thead>
             <tr><th>#</th><th>Date</th><th>Heure</th><th>Salle</th><th>Note</th><th>Mention</th></tr>

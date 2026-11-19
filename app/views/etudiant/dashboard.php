@@ -20,7 +20,7 @@
     <?php if (empty($mesMemoires)): ?>
         <a href="/app/controllers/EtudiantController.php?action=deposer" class="btn">+ Déposer un mémoire</a>
     <?php endif; ?>
-    <a href="/app/controllers/EtudiantController.php?action=planning" class="btn btn-outline">📅 Planning</a>
+    <a href="/app/controllers/EtudiantController.php?action=planning" class="btn btn-outline"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Planning</a>
 </div>
 
 <div class="table-wrap">
@@ -65,7 +65,7 @@
                 <td><?= $mention ?></td>
                 <td>
                     <?php if ($m['fichier']): ?>
-                        <a href="/app/controllers/TelechargerMemoireController.php?id=<?= (int) $m['idMemoire'] ?>" target="_blank" class="btn btn-sm btn-outline">📄 Voir</a>
+                        <a href="/app/controllers/TelechargerMemoireController.php?id=<?= (int) $m['idMemoire'] ?>" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> Voir</a>
                     <?php else: ?>
                         <span style="color:#aaa">—</span>
                     <?php endif; ?>

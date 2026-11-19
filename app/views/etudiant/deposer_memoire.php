@@ -20,7 +20,7 @@
     <input type="hidden" name="csrf_token"
            value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
 
-    <h3>📄 Informations du mémoire</h3>
+    <h3><i class="fa-regular fa-file-lines" aria-hidden="true"></i> Informations du mémoire</h3>
 
     <div class="form-group">
         <label>Titre du mémoire</label>
@@ -69,7 +69,7 @@
         </small>
     </div>
 
-    <button type="submit" class="btn">📤 Soumettre le mémoire</button>
+    <button type="submit" class="btn"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Soumettre le mémoire</button>
 </form>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
