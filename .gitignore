@@ -1,0 +1,24 @@
+# Configuration locale et secrets
+/config/database.php
+/config/database.local.php
+.env
+.env.*
+
+# Documents déposés par les utilisateurs
+/public/uploads/memoires/*
+!/public/uploads/memoires/.gitkeep
+
+# Fichiers temporaires
+*.log
+*.tmp
+
+# Fichiers système et éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+
+# Cache et fichiers temporaires PHP
+*.cache
+.phpunit.cache/
