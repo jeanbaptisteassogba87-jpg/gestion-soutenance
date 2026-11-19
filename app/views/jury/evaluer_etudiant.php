@@ -2,7 +2,7 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <div class="topbar">
-    <h1>Evaluer un étudiant</h1>
+    <h1>Évaluer un étudiant</h1>
     <a href="/app/controllers/JuryController.php?action=dashboard" class="btn btn-outline">
         ← Retour
     </a>
@@ -20,7 +20,7 @@
       method="POST"
       class="form-card">
 
-    <h3>Attribuer une note</h3>
+    <h3><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Attribuer une note</h3>
 
     <!-- Protection CSRF -->
     <input type="hidden"
@@ -81,7 +81,7 @@
            target="_blank"
            rel="noopener noreferrer"
            class="btn btn-sm btn-outline">
-            Voir le mémoire PDF
+            <i class="fa-regular fa-file-pdf" aria-hidden="true"></i> Voir le mémoire PDF
         </a>
 
         <span id="d-nopdf"
@@ -123,6 +123,7 @@
     </div>
 
     <button type="submit" class="btn">
+        <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
         Valider la note
     </button>
 

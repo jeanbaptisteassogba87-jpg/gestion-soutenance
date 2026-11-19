@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <div class="topbar">
-    <h1>Dashboard — Jury</h1>
+    <h1>Tableau de bord — Jury</h1>
     <span>Bonjour, <strong><?= htmlspecialchars($_SESSION['nom'] . ' ' . $_SESSION['prenom']) ?></strong></span>
 </div>
 
@@ -17,9 +17,9 @@
 </div>
 
 <div class="actions-bar">
-    <a href="/app/controllers/JuryController.php?action=evaluer" class="btn">✏️ Evaluer</a>
-    <a href="/app/controllers/JuryController.php?action=deliberer" class="btn btn-outline">⚖️ Délibérer</a>
-    <a href="/app/controllers/JuryController.php?action=planning" class="btn btn-outline">📅 Planning</a>
+    <a href="/app/controllers/JuryController.php?action=evaluer" class="btn"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Évaluer</a>
+    <a href="/app/controllers/JuryController.php?action=deliberer" class="btn btn-outline"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Délibérer</a>
+    <a href="/app/controllers/JuryController.php?action=planning" class="btn btn-outline"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Planning</a>
 </div>
 
 <div class="table-wrap">

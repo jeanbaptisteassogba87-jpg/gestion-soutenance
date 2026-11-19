@@ -6,7 +6,7 @@
 </div>
 
 <div class="table-wrap">
-    <div class="table-header"><h2>⚖️ Résultats</h2></div>
+    <div class="table-header"><h2><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Résultats</h2></div>
     <table>
         <thead>
             <tr><th>#</th><th>Date</th><th>Salle</th><th>Note</th><th>Mention</th><th>Décision</th></tr>
@@ -25,7 +25,7 @@
                 <td>
                     <?php if (!is_null($s['note'])): ?>
                         <?php if ($s['note'] >= 10): ?>
-                            <span class="badge badge-valide">✅ Admis</span>
+                            <span class="badge badge-valide"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Admis</span>
                         <?php else: ?>
                             <span class="badge badge-rejete">❌ Ajourné</span>
                         <?php endif; ?>
