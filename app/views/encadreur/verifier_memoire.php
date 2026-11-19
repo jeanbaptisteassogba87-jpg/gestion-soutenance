@@ -32,7 +32,7 @@
                 <td><?= $m['dateDepot'] ?></td>
                 <td>
                     <?php if ($m['fichier']): ?>
-                        <a href="/app/controllers/TelechargerMemoireController.php?id=<?= (int) $m['idMemoire'] ?>" target="_blank" class="btn btn-sm btn-outline">📄 Voir PDF</a>  
+                        <a href="/app/controllers/TelechargerMemoireController.php?id=<?= (int) $m['idMemoire'] ?>" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> Voir le PDF</a>
                     <?php else: ?>
                         <span style="color:#aaa">—</span>
                     <?php endif; ?>
@@ -45,7 +45,7 @@
     <input type="hidden" name="csrf_token"
            value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
     <input type="hidden" name="idMemoire" value="<?= (int)$m['idMemoire'] ?>">
-    <button type="submit" class="btn btn-success btn-sm">Valider</button>
+    <button type="submit" class="btn btn-success btn-sm"><i class="fa-solid fa-check" aria-hidden="true"></i> Valider</button>
 </form>
 
 <form action="/app/controllers/EncadreurController.php?action=rejeter"
@@ -53,7 +53,7 @@
     <input type="hidden" name="csrf_token"
            value="<?= htmlspecialchars(csrf_token(), ENT_QUOTES, 'UTF-8') ?>">
     <input type="hidden" name="idMemoire" value="<?= (int)$m['idMemoire'] ?>">
-    <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+    <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Rejeter</button>
 </form>
                         <span style="color:#aaa;font-size:13px">Traité</span>
                     <?php endif; ?>

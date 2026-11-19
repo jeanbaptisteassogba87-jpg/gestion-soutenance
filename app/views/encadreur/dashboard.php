@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <div class="topbar">
-    <h1>Dashboard — Encadreur</h1>
+    <h1>Tableau de bord — Encadreur</h1>
     <span>Bonjour, <strong><?= htmlspecialchars($_SESSION['nom'] . ' ' . $_SESSION['prenom']) ?></strong></span>
 </div>
 
@@ -21,7 +21,7 @@
 </div>
 
 <div class="actions-bar">
-    <a href="/app/controllers/EncadreurController.php?action=memoires" class="btn">📄 Voir les mémoires</a>
+    <a href="/app/controllers/EncadreurController.php?action=memoires" class="btn"><i class="fa-regular fa-folder-open" aria-hidden="true"></i> Voir les mémoires</a>
 </div>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
